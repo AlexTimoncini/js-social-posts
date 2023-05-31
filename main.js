@@ -42,7 +42,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": null
+            "image": null,
         },
         "likes": 56,
         "created": "2021-04-03"
@@ -57,6 +57,17 @@ const posts = [
         },
         "likes": 95,
         "created": "2021-03-05"
+    },
+    {
+        "id": 6,
+        "content": "Daje Roma Daje",
+        "media": "https://unsplash.it/600/300?image=171",
+        "author": {
+            "name": "Budino Fresco",
+            "image": null,
+        },
+        "likes": 40,
+        "created": "2021-01-31"
     }
 ];
 
@@ -77,10 +88,19 @@ function generatePost(parent, arrayObjects){
     
         let postMetaIcon = document.createElement('div');
         postMetaIcon.className = 'post-meta__icon';
-    
-        let profilePic = document.createElement('img');
-        profilePic.className = 'profile-pic';
-        profilePic.src = object.author.image;
+        
+        let profilePic;
+        if (object.author.image != null){
+            profilePic = document.createElement('img');
+            profilePic.className = 'profile-pic';
+            profilePic.src = object.author.image;
+        } else {
+            profilePic = document.createElement('div');
+            let initials = document.createElement('span');
+            initials.innerHTML = object.author.name.split(' ').map(word => word[0]).join('').toUpperCase();
+            profilePic.appendChild(initials);
+            profilePic.className = 'profile-pic-default';
+        }
     
         postMetaIcon.appendChild(profilePic);
     
