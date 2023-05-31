@@ -60,6 +60,8 @@ const posts = [
     }
 ];
 
+let likedPosts = [];
+
 generatePost(postWrapperDom, posts);
 
 function generatePost(parent, arrayObjects){
@@ -116,24 +118,64 @@ function generatePost(parent, arrayObjects){
         let postFooter = document.createElement('div');
         postFooter.className = 'post__footer';
         
-        postFooter.innerHTML = 
-        `<div class="likes js-likes">
-            <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1">
-                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                    <span class="like-button__label">Mi Piace</span>
-                </a>
-            </div>
-            <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">${object.likes}</b> persone!
-            </div>
-        </div>`
+        let likeWrapper = document.createElement('div');
+        likeWrapper.className = 'likes js-likes';
+
+        let likeCta = document.createElement('div');
+        likeCta.className = 'likes__cta';
+
+        const likeBtn = document.createElement('a');
+        likeBtn.className = 'like-button js-like-button'
+        likeBtn.href = '#';
+
+        const likeIcon = document.createElement('i');
+        likeIcon.className = 'like-button__icon fas fa-thumbs-up';
+        likeIcon.ariaHidden = 'true';
+
+        const likeDisc = document.createElement('span');
+        likeDisc.className = 'like-button__label';
+        likeDisc.innerHTML = ' Mi Piace';
+
+        likeBtn.appendChild(likeIcon);
+        likeBtn.appendChild(likeDisc);
+
+        likeCta.appendChild(likeBtn);
+
+        const likeCounter = document.createElement('div');
+        likeCounter.className = 'likes__counter';
+        likeCounter.innerHTML = `Piace a ${object.likes} persone`;
+
+
+        likeWrapper.appendChild(likeCta);
+        likeWrapper.appendChild(likeCounter);
+
+        postFooter.appendChild(likeWrapper);
     
         post.appendChild(postHeader);
         post.appendChild(postText);
         post.appendChild(postImg);
         post.appendChild(postFooter);
         parent.appendChild(post);
-    
+
+        let liked = false;
+        likeBtn.addEventListener('click', () =>{
+            if (!liked){
+                object.likes += 1;
+                liked = true;
+                likeCounter.innerHTML = `Piace a ${object.likes} persone`;
+                likedPosts.push(object);
+                console.log(likedPosts);
+
+            } else {
+                object.likes -= 1;
+                liked = false;
+                likeCounter.innerHTML = `Piace a ${object.likes} persone`;
+                likedPosts = likedPosts.filter(post => post.id !== object.id);
+                console.log(likedPosts);
+            }
+            likeBtn.classList.toggle('like-button--liked');
+        });
     });
 }
+
+console.log(likedPosts);
