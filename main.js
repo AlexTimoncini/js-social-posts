@@ -146,7 +146,6 @@ function generatePost(parent, arrayObjects){
 
         const likeBtn = document.createElement('a');
         likeBtn.className = 'like-button js-like-button'
-        likeBtn.href = '#';
 
         const likeIcon = document.createElement('i');
         likeIcon.className = 'like-button__icon fas fa-thumbs-up';
