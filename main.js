@@ -93,7 +93,7 @@ function generatePost(parent, arrayObjects){
 
         let postMetaTime = document.createElement('div');
         postMetaTime.className = 'post-meta__time';
-        postMetaTime.innerHTML = object.created
+        postMetaTime.innerHTML = convertDate(object.created);
 
         postMetaData.appendChild(postMetaAuthor);
         postMetaData.appendChild(postMetaTime);
@@ -165,7 +165,6 @@ function generatePost(parent, arrayObjects){
                 likeCounter.innerHTML = `Piace a ${object.likes} persone`;
                 likedPosts.push(object);
                 console.log(likedPosts);
-
             } else {
                 object.likes -= 1;
                 liked = false;
@@ -179,3 +178,9 @@ function generatePost(parent, arrayObjects){
 }
 
 console.log(likedPosts);
+
+function convertDate(dateString){
+    let dateConverted = dateString.substring(8) + '/' + dateString.substring(5,7) + '/' + dateString.substring(2,4)
+    dateString.substring(1,2);
+    return dateConverted
+}
